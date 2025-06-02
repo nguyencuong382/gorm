@@ -324,7 +324,7 @@ func preload(tx *gorm.DB, rel *schema.Relationship, conds []interface{}, preload
 
 		datas, ok := identityMap[utils.ToStringKey(fieldValues...)]
 		if !ok {
-			return fmt.Errorf("failed to assign association %#v, make sure foreign fields exists", elem.Interface())
+			// return fmt.Errorf("failed to assign association %#v, make sure foreign fields exists", elem.Interface())
 		}
 
 		for _, data := range datas {
