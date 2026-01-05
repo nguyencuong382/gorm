@@ -83,6 +83,12 @@ func (schema *Schema) LookUpField(name string) *Field {
 		return field
 	}
 
+	// Try lowercase match
+    lowerName := strings.ToLower(name)
+    if field, ok := schema.FieldsByDBName[lowerName]; ok {
+        return field
+    }
+
 	// Lookup field using namer-driven ColumnName
 	if schema.namer == nil {
 		return nil
