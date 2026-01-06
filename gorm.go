@@ -229,7 +229,7 @@ func Open(dialector Dialector, opts ...Option) (db *DB, err error) {
 	db.Statement = &Statement{
 		DB:       db,
 		ConnPool: db.ConnPool,
-		Context:  context.Background(),
+		Context:  context.WithValue(context.Background(), schema.DialectKey{}, db.Dialector.Name()),
 		Clauses:  map[string]clause.Clause{},
 	}
 
@@ -440,7 +440,7 @@ func (db *DB) getInstance() *DB {
 			tx.Statement = &Statement{
 				DB:        tx,
 				ConnPool:  db.Statement.ConnPool,
-				Context:   db.Statement.Context,
+				Context:   context.WithValue(db.Statement.Context, schema.DialectKey{}, db.Dialector.Name()),
 				Clauses:   map[string]clause.Clause{},
 				Vars:      make([]interface{}, 0, 8),
 				SkipHooks: db.Statement.SkipHooks,
